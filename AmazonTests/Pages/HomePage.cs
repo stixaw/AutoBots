@@ -9,27 +9,32 @@ namespace AmazonTests.Pages
 	public class HomePage
 	{
 
-		readonly IWebDriver _driver;
-		readonly WebDriverWait _wait;
-		readonly HomePageMap map;
+		readonly IWebDriver Driver;
+		readonly WebDriverWait Wait;
+		public readonly HomePageMap Map;
 
 		public HomePage(IWebDriver driver, WebDriverWait wait)
 		{
-			_driver = driver;
-			_wait = wait;
-			map = new HomePageMap(driver);
+			Driver = driver;
+			Wait = wait;
+			Map = new HomePageMap(driver);
 
 		}
 
-		public void GoTo()
+		public void GoTo(string url)
 		{
-			_driver.Navigate().GoToUrl("https://amazon.com");
-			WaitForPageToLoad();
+			Driver.Navigate().GoToUrl(url);
+			WaitForHomePageToLoad();
 		}
 
-		internal void WaitForPageToLoad()
+		public void SwitchDept()
 		{
-			_wait.Until(driver => map.HomePageSearchBar.Displayed);
+			Map.HomePageSearchBar.Click();
+		}
+
+		internal void WaitForHomePageToLoad()
+		{
+			Wait.Until(driver => Map.HomePageSearchBar.Displayed);
 			Console.WriteLine("amazon.com loaded");
 		}
 

@@ -18,7 +18,8 @@ namespace AmazonTests.Helpers
 
 		public static string GetElementInput(IWebElement element)
 		{
-			string input = element.GetProperty("value");
+			var input = element.GetProperty("value");
+			Console.WriteLine(input);
 			return input;
 
 		}

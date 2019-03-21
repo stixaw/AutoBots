@@ -15,14 +15,18 @@ namespace AmazonTests
 		IWebDriver Driver;
 		WebDriverWait Wait;
 
+
 		[TestInitialize]
 		public void SetUp()
 		{
 			Driver = new ChromeDriver(@"/Source/autobots/AmazonTests/AmazonTests/driver");
 			Wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(30));
 
+			// Go To Amazon.com
+			//driver.Navigate().GoToUrl("https://amazon.com");
 			var home = new HomePage(Driver, Wait);
-			home.GoTo();
+			home.GoTo("https://amazon.com");
+			home.WaitForHomePageToLoad();
 
 		}
 
@@ -36,43 +40,26 @@ namespace AmazonTests
         [TestMethod]
         public void User_can_create_account()
         {
-            // Go To Amazon.com
-			//driver.Navigate().GoToUrl("https://amazon.com");
-
-            
+			var signInPage = new SignInPage(Driver, Wait);
 			//Hover "Hello, Sign in. Account & Lists" to reveal menu
-            IWebElement hover = Driver.FindElement(By.CssSelector("#nav-link-accountList"));
-			ElementHelper.Hover(Driver, hover);
-			//Actions actions = new Actions(driver);
-			//actions.MoveToElement(signinHover);
-			//actions.Build().Perform();
-
 			//Click Sign-in
-			IWebElement signinButton = Driver.FindElement(By.CssSelector(".nav-action-button"));
-			signinButton.Click();
-
+			signInPage.GoToSignIn();
 			//Click Create your Amazon Account
-			Driver.FindElement(By.Id("createAccountSubmit")).Click();
+			signInPage.CreateAccount("John Doe", "pc@user.com", "P@ssword1");
 
-			//Fill out the form(Do not submit)
-			Driver.FindElement(By.Id("ap_customer_name")).SendKeys("name");
-			Driver.FindElement(By.Id("ap_email")).SendKeys("email");
-			//IWebElement passworldField = driver.FindElement(By.Id("ap_password"));
-			//IWebElement passwordCheck = driver.FindElement(By.Id("ap_password_check"));
 
 			//enter password in app-password
-			IWebElement passworldField = Driver.FindElement(By.Id("ap_password"));
-			passworldField.SendKeys("password");
-			string passwordInput = ElementHelper.GetElementInput(passworldField);
+			//var passwordInput = signInPage.Map.PassworldField.GetProperty("value");
+			var password1 = ElementHelper.GetElementInput(signInPage.Map.PasswordField);
+			Console.WriteLine(password1);
 
 			//enter password check
-			IWebElement passwordCheck = Driver.FindElement(By.Id("ap_password_check"));
-			passwordCheck.SendKeys("password");
-			string passwordCheckInput = ElementHelper.GetElementInput(passwordCheck);
+			//var passwordCheck = ElementHelper.GetElementInput(signInPage.Map.PasswordCheck);
+			var password2 = ElementHelper.GetElementInput(signInPage.Map.PasswordCheck);
+			Console.WriteLine(password2);
 
 			//Assert the re - enter password field's value matches the password field's value
-
-			Assert.AreEqual(passwordCheckInput, passworldField);
+			Assert.AreEqual(password1, password2);
 
         }
 
@@ -81,8 +68,6 @@ namespace AmazonTests
 		{
 
 		}
-
-		
 
     }
 }

@@ -47,15 +47,14 @@ namespace AmazonTests
 			//Click Create your Amazon Account
 			signInPage.CreateAccount("John Doe", "pc@user.com", "P@ssword1");
 
-
 			//enter password in app-password
 			//var passwordInput = signInPage.Map.PassworldField.GetProperty("value");
-			var password1 = ElementHelper.GetElementInput(signInPage.Map.PasswordField);
+			var password1 = signInPage.Map.PasswordField.GetProperty("value");
 			Console.WriteLine(password1);
 
 			//enter password check
 			//var passwordCheck = ElementHelper.GetElementInput(signInPage.Map.PasswordCheck);
-			var password2 = ElementHelper.GetElementInput(signInPage.Map.PasswordCheck);
+			var password2 = signInPage.Map.PasswordCheck.GetProperty("value");
 			Console.WriteLine(password2);
 
 			//Assert the re - enter password field's value matches the password field's value

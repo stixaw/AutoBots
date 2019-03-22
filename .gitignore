@@ -4,3 +4,6 @@
 
 /.vs/AmazonTests/v15/Server/sqlite3
 /.vs/AmazonTests/v15/.suo
+/AmazonTests/bin/Debug/netcoreapp2.1
+
+/AmazonTests/obj/Debug/netcoreapp2.1
